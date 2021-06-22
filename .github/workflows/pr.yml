@@ -1,0 +1,14 @@
+name: pull-requests
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  one:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kceb/pull-request-url-action@v1
+        id: pr-url
+
+      - run: echo "${{ steps.pr-url.outputs.url }}"
