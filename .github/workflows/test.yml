@@ -1,9 +1,20 @@
-on: push
+on:
+  push:
+    branches: 
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+  
 
 jobs:
   one:
     runs-on: ubuntu-latest
     steps:
+      - uses: kceb/pull-request-url-action@v1
+        id: pr-url
+
+      - run: echo "${{ steps.pr-url.outputs.url }}"
       - name: Extract branch name
         run: echo '::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})'
         id: extract_branch
