@@ -8,7 +8,7 @@ jobs:
         run: echo '::set-output name=branch::$(echo ${{github.ref}})'
         id: extract_branch
       - name: Print
-        run: echo ${{ steps.extract_branch.outputs.branch}}
+        run: echo "${{ steps.extract_branch.outputs.branch}}"
       - name: hola
         env:
           REF: ${{ github.ref }}
