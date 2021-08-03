@@ -29,7 +29,7 @@ jobs:
           git commit -m 'Add change'
           git log
           git tag lolaja
-          git push origin --tags
+          git push origin prueba --tags
 
       - run: |
           echo "Hello ${{ github.event.inputs.name }}!"
