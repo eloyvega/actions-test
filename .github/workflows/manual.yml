@@ -23,14 +23,13 @@ jobs:
           token: "${{ secrets.GITHUB_TOKEN }}"
 
       - run: |
-          git branch -vv
-          touch insanity.txt
+          echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+          touch renting.txt
           git add .
-          git commit -m 'Add insanity'
-          git log
-          git tag elrich
+          git commit -m 'Add renting'
+          git tag bighead
           git push origin prueba
-          git push origin elrich
+          git push origin --tags
 
       - run: |
           echo "Hello ${{ github.event.inputs.name }}!"
