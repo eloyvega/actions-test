@@ -18,7 +18,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          ls
+          touch chage.txt
+          git add .
+          git commit -m 'Add change'
+          git tag v0.1.0
+          git push --tags
+
       - run: |
           echo "Hello ${{ github.event.inputs.name }}!"
           echo "- in ${{ github.event.inputs.home }}!"
