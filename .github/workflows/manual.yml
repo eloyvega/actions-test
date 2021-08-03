@@ -26,8 +26,9 @@ jobs:
           touch chage.txt
           git add .
           git commit -m 'Add change'
+          git log
           git tag actionsTest
-          git push --tags
+          git push origin --tags
 
       - run: |
           echo "Hello ${{ github.event.inputs.name }}!"
