@@ -28,8 +28,9 @@ jobs:
           git add .
           git commit -m 'Add change'
           git log
-          git tag tabspaces
-          git push origin prueba --tags
+          git tag lololol
+          git push origin prueba
+          git push origin lololol
 
       - run: |
           echo "Hello ${{ github.event.inputs.name }}!"
