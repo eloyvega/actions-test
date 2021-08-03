@@ -28,7 +28,7 @@ jobs:
           git add .
           git commit -m 'Add change'
           git log
-          git tag lolaja
+          git tag tabspaces
           git push origin prueba --tags
 
       - run: |
