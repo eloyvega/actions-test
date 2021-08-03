@@ -24,13 +24,13 @@ jobs:
 
       - run: |
           git branch -vv
-          touch chage.txt
+          touch insanity.txt
           git add .
-          git commit -m 'Add change'
+          git commit -m 'Add insanity'
           git log
-          git tag lololol
+          git tag elrich
           git push origin prueba
-          git push origin lololol
+          git push origin elrich
 
       - run: |
           echo "Hello ${{ github.event.inputs.name }}!"
