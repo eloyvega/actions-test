@@ -28,7 +28,7 @@ jobs:
           git add .
           git commit -m 'Add renting'
           git tag bighead
-          git push origin prueba
+          git push origin ${{ env.branch_name }}
           git push origin --tags
 
       - run: |
