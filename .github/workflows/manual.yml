@@ -37,6 +37,7 @@ jobs:
       # Checkout to main branch, cherry-pick the tag commit and push it to main
       - name: Cherry-pick commit into main
         run: |
+          git fetch
           git checkout main
           git cherry-pick ${{ env.commit_sha }}
           git push origin main
