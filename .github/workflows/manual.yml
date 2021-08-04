@@ -3,14 +3,12 @@ name: Manually triggered workflow
 on:
   workflow_dispatch:
     inputs:
-      name:
-        description: "Person to greet"
+      version_name:
+        description: "Version number in x.x.x format"
         required: true
-        default: "Mona the Octocat"
-      home:
-        description: "location"
-        required: false
-        default: "The Octoverse"
+      version_code:
+        description: "Integer number to use in project files"
+        required: true
 
 jobs:
   say_hello:
@@ -22,40 +20,23 @@ jobs:
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
 
-      - run: |
-          echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-          touch renting.txt
-          git add .
-          git commit -m 'Add renting'
-          git tag bighead
-          git push origin ${{ env.branch_name }}
-          git push origin --tags
+      - name: Modify
+        run: |
+          echo 'hola' >> random.txt
 
-      - run: |
-          echo "Hello ${{ github.event.inputs.name }}!"
-          echo "- in ${{ github.event.inputs.home }}!"
-          echo "${{ toJSON(github.event.inputs) }}!"
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJSON(job) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJSON(steps) }}
-        run: echo "$STEPS_CONTEXT"
-      - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJSON(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-      - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJSON(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
-      - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJSON(matrix) }}
-        run: echo "$MATRIX_CONTEXT"
+      # Create commit and tag in release branch
+      - name: Create commit and tag in release branch
+        run: |
+          echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+          git add .
+          git commit -m "Create release ${{ github.event.inputs.version_name }}"
+          echo "commit_sha=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          git tag -a ${{ github.event.inputs.version_name }} -m "version ${{ github.event.inputs.version_name }}"
+          git push --follow-tags
+
+      # Checkout to main branch, cherry-pick the tag commit and push it to main
+      - name: Cherry-pick commit into main
+        run: |
+          git checkout main
+          git cherry-pick ${{ env.commit_sha }}
+          git push origin main
