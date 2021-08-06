@@ -1,0 +1,51 @@
+name: Android publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_all_dependencies:
+        description: "Publish all Android SDK dependencies"
+        required: true
+        default: "no"
+      publish_amazon_iap:
+        description: "Publish Amazon IAP SDK"
+        required: true
+        default: "no"
+      publish_android_jsc:
+        description: "Publish Android JSC SDK"
+        required: true
+        default: "no"
+      publish_react_native_code_push:
+        description: "Publish RN Code Push Android SDK"
+        required: true
+        default: "no"
+      publish_react_native_hermes:
+        description: "Publish Hermes Android SDK"
+        required: true
+        default: "no"
+      publish_react_native_iap:
+        description: "Publish RN IAP Android SDK"
+        required: true
+        default: "no"
+      publish_react_native_localize:
+        description: "Publish RN Localize Android SDK"
+        required: true
+        default: "no"
+      publish_react_native_picker:
+        description: "Publish RN Picker Android SDK"
+        required: true
+        default: "no"
+      publish_react_native_sdk:
+        description: "Publish React Native Android SDK"
+        required: true
+        default: "no"
+      publish_react_native_webview:
+        description: "Publish RN WebView Android SDK"
+        required: true
+        default: "no"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
