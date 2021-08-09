@@ -74,4 +74,6 @@ jobs:
             command: ":gi-react-native-webview:publishAarPublicationToDiscoveryNexus"
     steps:
       - uses: actions/checkout@v2
-        if: ${{ github.event.inputs['${{matrix.name}}'] == 'yes' }}
+      - run: |
+          echo "${{matrix.name}}"
+          echo "${{ github.event.inputs.publish_all_dependencies}}"
