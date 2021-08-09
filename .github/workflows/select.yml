@@ -18,6 +18,9 @@ on:
           publish_react_native_webview
         required: true
 
+env:
+  publish_all_dependencies: "publishGiSdkDependenciesToDiscoveryNexus"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,3 +29,4 @@ jobs:
       # - uses: actions/checkout@v2
       - run: |
           echo "hola"
+          echo ${{ env[github.event.inputs.task] }}
