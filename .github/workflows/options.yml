@@ -48,8 +48,10 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo ${{ toJSON(github.event.inputs) }}
+      - name: Dump inputs
+        env:
+          EVENT_INPUTS: ${{ toJSON(github.event.inputs) }}
+        run: echo "$EVENT_INPUTS"
 
   # build:
   #   runs-on: ubuntu-latest
