@@ -3,7 +3,7 @@ name: Android publish select
 on:
   workflow_dispatch:
     inputs:
-      task:
+      action:
         description: |
           Use one of the following:
           publish_all_dependencies
@@ -20,13 +20,22 @@ on:
 
 env:
   publish_all_dependencies: "publishGiSdkDependenciesToDiscoveryNexus"
+  publish_amazon_iap: ":gi-amazon-iap:publishAllPublicationsToDiscoveryNexusRepository"
+  publish_android_jsc: ":gi-android-jsc:publishAarPublicationToDiscoveryNexus"
+  publish_react_native_code_push: ":gi-react-native-code-push:publishAarPublicationToDiscoveryNexus"
+  publish_react_native_hermes: ":gi-hermes-release:publishAarPublicationToDiscoveryNexus"
+  publish_react_native_iap: ":gi-react-native-iap:publishAllPublicationsToDiscoveryNexusRepository"
+  publish_react_native_localize: ":gi-react-native-localize:publishAarPublicationToDiscoveryNexus"
+  publish_react_native_picker: ":gi-react-native-picker:publishAarPublicationToDiscoveryNexus"
+  publish_react_native_sdk: ":gi-react-native:publishAarPublicationToDiscoveryNexus"
+  publish_react_native_webview: ":gi-react-native-webview:publishAarPublicationToDiscoveryNexus"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+
       - run: |
-          echo "hola"
-          echo ${{ env[github.event.inputs.task] }}
+          echo ${{ env[github.event.inputs.action] }}

@@ -50,6 +50,7 @@ jobs:
 
     strategy:
       fail-fast: false
+      if: ${{github.event.inputs['${{matrix.name}}'] == 'yes'}}
       matrix:
         include:
           - name: publish_all_dependencies
