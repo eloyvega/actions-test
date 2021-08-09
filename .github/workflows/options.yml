@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo ${{ github.event.inputs }}
+          echo ${{ toJSON(github.event.inputs) }}
 
   # build:
   #   runs-on: ubuntu-latest
