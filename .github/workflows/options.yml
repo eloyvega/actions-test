@@ -47,7 +47,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs['${{matrix.name}}'] == 'yes' }}
+    if: ${{ github.event.inputs[${{matrix.name}}] == 'yes' }}
     strategy:
       fail-fast: false
       matrix:
