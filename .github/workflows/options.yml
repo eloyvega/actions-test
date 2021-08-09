@@ -47,8 +47,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs['${{matrix.name}}'] == 'no' }}
+    if: ${{ github.event.inputs['publish_all_dependencies'] == 'yes' }}
     strategy:
+      fail-fast: false
       matrix:
         include:
           - name: publish_all_dependencies
