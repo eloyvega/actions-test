@@ -56,22 +56,22 @@ jobs:
             command: publishGiSdkDependenciesToDiscoveryNexus
           - name: publish_amazon_iap
             command: ":gi-amazon-iap:publishAllPublicationsToDiscoveryNexusRepository"
-          # - name: publish_android_jsc
-          #   command: ":gi-android-jsc:publishAarPublicationToDiscoveryNexus"
-          # - name: publish_react_native_code_push
-          #   command: ":gi-react-native-code-push:publishAarPublicationToDiscoveryNexus"
-          # - name: publish_react_native_hermes
-          #   command: ":gi-hermes-release:publishAarPublicationToDiscoveryNexus"
-          # - name: publish_react_native_iap
-          #   command: ":gi-react-native-iap:publishAllPublicationsToDiscoveryNexusRepository"
-          # - name: publish_react_native_localize
-          #   command: ":gi-react-native-localize:publishAarPublicationToDiscoveryNexus"
-          # - name: publish_react_native_picker
-          #   command: ":gi-react-native-picker:publishAarPublicationToDiscoveryNexus"
-          # - name: publish_react_native_sdk
-          #   command: ":gi-react-native:publishAarPublicationToDiscoveryNexus"
-          # - name: publish_react_native_webview
-          #   command: ":gi-react-native-webview:publishAarPublicationToDiscoveryNexus"
+          - name: publish_android_jsc
+            command: ":gi-android-jsc:publishAarPublicationToDiscoveryNexus"
+          - name: publish_react_native_code_push
+            command: ":gi-react-native-code-push:publishAarPublicationToDiscoveryNexus"
+          - name: publish_react_native_hermes
+            command: ":gi-hermes-release:publishAarPublicationToDiscoveryNexus"
+          - name: publish_react_native_iap
+            command: ":gi-react-native-iap:publishAllPublicationsToDiscoveryNexusRepository"
+          - name: publish_react_native_localize
+            command: ":gi-react-native-localize:publishAarPublicationToDiscoveryNexus"
+          - name: publish_react_native_picker
+            command: ":gi-react-native-picker:publishAarPublicationToDiscoveryNexus"
+          - name: publish_react_native_sdk
+            command: ":gi-react-native:publishAarPublicationToDiscoveryNexus"
+          - name: publish_react_native_webview
+            command: ":gi-react-native-webview:publishAarPublicationToDiscoveryNexus"
     steps:
       # - uses: actions/checkout@v2
       - run: |

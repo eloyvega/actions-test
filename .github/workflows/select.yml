@@ -1,0 +1,28 @@
+name: Android publish select
+
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: |
+          Use one of the following:
+          publish_all_dependencies
+          publish_amazon_iap
+          publish_android_jsc
+          publish_react_native_code_push
+          publish_react_native_hermes
+          publish_react_native_iap
+          publish_react_native_localize
+          publish_react_native_picker
+          publish_react_native_sdk
+          publish_react_native_webview
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # - uses: actions/checkout@v2
+      - run: |
+          echo "hola"
