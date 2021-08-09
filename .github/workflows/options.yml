@@ -77,5 +77,5 @@ jobs:
       - run: |
           echo "${{matrix.name}}"
           echo "${{github.event.inputs['publish_all_dependencies']}}"
-          echo "${{github.event.inputs['${{matrix.name}}']}}"
+          echo "${{github.event.inputs["${{matrix.name}}"]}}"
           echo "${{github.event.inputs['${{matrix.name}}'] == 'yes'}}"
