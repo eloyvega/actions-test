@@ -47,7 +47,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs[${{matrix.name}}] == 'yes' }}
+
     strategy:
       fail-fast: false
       matrix:
@@ -74,3 +74,4 @@ jobs:
             command: ":gi-react-native-webview:publishAarPublicationToDiscoveryNexus"
     steps:
       - uses: actions/checkout@v2
+        if: ${{ github.event.inputs['${{matrix.name}}'] == 'yes' }}
