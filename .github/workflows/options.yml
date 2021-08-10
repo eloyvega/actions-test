@@ -45,41 +45,17 @@ on:
         default: "no"
 
 jobs:
-  setup:
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        task:
+          [
+            "publishGiSdkDependenciesToDiscoveryNexus",
+            ":gi-amazon-iap:publishAllPublicationsToDiscoveryNexusRepository",
+          ]
     steps:
-      - name: Dump inputs
-        env:
-          EVENT_INPUTS: ${{ toJSON(github.event.inputs) }}
-        run: echo "$EVENT_INPUTS"
-
-  # build:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       include:
-  #         - name: publish_all_dependencies
-  #           command: publishGiSdkDependenciesToDiscoveryNexus
-  #         - name: publish_amazon_iap
-  #           command: ":gi-amazon-iap:publishAllPublicationsToDiscoveryNexusRepository"
-  #         - name: publish_android_jsc
-  #           command: ":gi-android-jsc:publishAarPublicationToDiscoveryNexus"
-  #         - name: publish_react_native_code_push
-  #           command: ":gi-react-native-code-push:publishAarPublicationToDiscoveryNexus"
-  #         - name: publish_react_native_hermes
-  #           command: ":gi-hermes-release:publishAarPublicationToDiscoveryNexus"
-  #         - name: publish_react_native_iap
-  #           command: ":gi-react-native-iap:publishAllPublicationsToDiscoveryNexusRepository"
-  #         - name: publish_react_native_localize
-  #           command: ":gi-react-native-localize:publishAarPublicationToDiscoveryNexus"
-  #         - name: publish_react_native_picker
-  #           command: ":gi-react-native-picker:publishAarPublicationToDiscoveryNexus"
-  #         - name: publish_react_native_sdk
-  #           command: ":gi-react-native:publishAarPublicationToDiscoveryNexus"
-  #         - name: publish_react_native_webview
-  #           command: ":gi-react-native-webview:publishAarPublicationToDiscoveryNexus"
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - run: |
-  #         echo "${{matrix.name}}"
+      - uses: actions/checkout@v2
+      - run: |
+          echo "${{matrix.task}}"
