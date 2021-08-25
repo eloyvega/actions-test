@@ -6,12 +6,16 @@ console.log(process.env.OWNER);
 console.log(process.env.REPO);
 
 const getWorkflowRunDetails = async ({ repo, owner, runId }) => {
-  const res = await octokit.rest.actions.listJobsForWorkflowRun({
-    owner,
-    repo,
-    run_id: runId,
-  });
-  console.log(res.data);
+  try {
+    const res = await octokit.rest.actions.listJobsForWorkflowRun({
+      owner,
+      repo,
+      run_id: runId,
+    });
+    console.log(res.data);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 getWorkflowRunDetails({
