@@ -29,7 +29,7 @@ const getFailedStep = async (repo, owner, runId) => {
 };
 
 const main = async ({ repo, owner, runId, stepAllowlist }) => {
-  const failedStep = getFailedStep(repo, owner, runId);
+  const failedStep = await getFailedStep(repo, owner, runId);
   console.log(failedStep);
   console.log(stepAllowlist);
 };
