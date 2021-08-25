@@ -1,7 +1,7 @@
 const { Octokit } = require("octokit");
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
-const getFailedStep = async (repo, owner, runId) => {
+const getFailedJob = async (repo, owner, runId) => {
   try {
     const res = await octokit.rest.actions.listJobsForWorkflowRun({
       owner,
@@ -10,13 +10,8 @@ const getFailedStep = async (repo, owner, runId) => {
     });
     workflowRunDetails = res.data;
     for (const job of workflowRunDetails.jobs) {
-      if (job.conclusion === "success") {
-        continue;
-      }
-      for (const step of job.steps) {
-        if (step.conclusion === "failure") {
-          return step.name;
-        }
+      if (job.conclusion === "failure") {
+        return job.name;
       }
     }
   } catch (error) {
@@ -25,9 +20,9 @@ const getFailedStep = async (repo, owner, runId) => {
   }
 };
 
-const main = async ({ repo, owner, runId, stepAllowlist }) => {
-  const failedStep = await getFailedStep(repo, owner, runId);
-  if (stepAllowlist.includes(failedStep)) {
+const main = async ({ repo, owner, runId, jobFailureAllowlist }) => {
+  const failedJob = await getFailedJob(repo, owner, runId);
+  if (jobFailureAllowlist.includes(failedJob)) {
     console.log("Nothing to do");
   }
   console.log("Notify");
@@ -37,5 +32,5 @@ main({
   repo: process.env.REPO,
   owner: process.env.OWNER,
   runId: process.env.RUN_ID,
-  stepAllowlist: process.env.STEP_ALLOWLIST.split(","),
+  jobFailureAllowlist: process.env.JOB_FAILURE_ALLOWLIST.split(","),
 });
