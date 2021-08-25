@@ -4,6 +4,7 @@ const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 console.log(process.env.GITHUB_TOKEN);
 console.log(process.env.OWNER);
 console.log(process.env.REPO);
+console.log(process.env.RUN_ID);
 
 const getWorkflowRunDetails = async ({ repo, owner, runId }) => {
   try {
