@@ -15,8 +15,13 @@ const getFailedStep = async (repo, owner, runId) => {
     });
     workflowRunDetails = res.data;
     console.log(workflowRunDetails);
-    for (const jobs of workflowRunDetails.jobs) {
-      for (const step of jobs.steps) {
+    for (const job of workflowRunDetails.jobs) {
+      if (job.conclusion === "success") {
+        console.log("name");
+        continue;
+      }
+      console.log("found");
+      for (const step of job.steps) {
         if (step.conclusion === "failure") {
           return step.name;
         }
