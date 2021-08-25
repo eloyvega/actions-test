@@ -11,7 +11,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
       - name: On failure
-        working-directory: .github/scripts/handle_errors
+        working-directory: ./.github/scripts/handle_errors
         run: |
           npm install
 
