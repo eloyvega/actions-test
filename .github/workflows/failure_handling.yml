@@ -15,4 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
-      - run: echo ${{ toJSON(github.event.workflow_run) }}
+      - name: On failure
+        env:
+          WORKFLOW_RUN: ${{ toJSON(github.event.workflow_run) }}
+        run: echo "$WORKFLOW_RUN"
