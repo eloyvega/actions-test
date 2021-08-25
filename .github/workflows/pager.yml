@@ -3,7 +3,7 @@ name: Pager Duty test
 on:
   push:
     branches:
-      - main
+      - pager
 
 jobs:
   pager:
