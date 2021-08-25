@@ -13,7 +13,13 @@ const getWorkflowRunDetails = async ({ repo, owner, runId }) => {
       repo,
       run_id: runId,
     });
-    console.log(res.data);
+    workflowRunDetails = res.data;
+    console.log(workflowRunDetails);
+    for (const jobs of workflowRunDetails.jobs) {
+      for (const step of jobs.steps) {
+        console.log(step);
+      }
+    }
   } catch (error) {
     console.log(error);
   }
