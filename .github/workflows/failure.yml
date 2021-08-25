@@ -6,6 +6,11 @@ on:
       - main
 
 jobs:
+  all-ok:
+    runs-on: ubuntu-latest
+    steps:
+      - name: All ok
+        run: echo "OK"
   epic-fail:
     runs-on: ubuntu-latest
     steps:
