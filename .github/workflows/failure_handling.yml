@@ -10,9 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
+      - uses: actions/checkout@v2
+
       - name: On failure
+        working-directory: .github/scripts/handle_errors
         run: |
-          cd ./.github/scripts/handle_errors
           npm install
 
       - name: Dump Workflow Run
