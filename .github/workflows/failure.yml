@@ -1,0 +1,13 @@
+name: Failure
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  epic-fail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Epic Fail
+        run: asdfasdf
