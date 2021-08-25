@@ -22,5 +22,5 @@ const getWorkflowRunDetails = async ({ repo, owner, runId }) => {
 getWorkflowRunDetails({
   repo: process.env.REPO,
   owner: process.env.OWNER,
-  run_id: process.env.RUN_ID,
+  runId: process.env.RUN_ID,
 });
