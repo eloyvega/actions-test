@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@pagerduty/pdjs": "^2.2.2",
     "octokit": "^1.4.0"
   }
 }

@@ -1,5 +1,9 @@
 const { Octokit } = require("octokit");
+const PagerDuty = require("@pagerduty/pdjs");
+
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+
+console.log(process.env.EVENT);
 
 const { failed_jobs_allowlist } = require("./failed-jobs-allowlist");
 
@@ -22,12 +26,30 @@ const getFailedJob = async (repo, owner, runId) => {
   }
 };
 
+const createPagerDutyIncident = async () => {
+  const res = await PagerDuty.event({
+    data: {
+      routing_key: "",
+      event_action: "trigger",
+      dedup_key: "test_incident_2_88f520",
+      payload: {
+        summary: "Test Event V2",
+        source: "test-source",
+        severity: "error",
+      },
+    },
+  });
+  console.log(res);
+};
+
 const main = async ({ repo, owner, runId }) => {
   const failedJob = await getFailedJob(repo, owner, runId);
   if (failed_jobs_allowlist.includes(failedJob)) {
     console.log("Nothing to do");
+    return;
   }
   console.log("Notify");
+  // await createPagerDutyIncident();
   console.log(failed_jobs_allowlist);
 };
 

@@ -19,7 +19,8 @@ jobs:
           REPO: ${{ github.event.workflow_run.repository.name }}
           OWNER: ${{ github.event.workflow_run.repository.owner.login }}
           RUN_ID: ${{ github.event.workflow_run.id }}
-          JOB_FAILURE_ALLOWLIST: "Failure Step,NoMoreSteps,Please dont,epic-fail"
+          PD_TOKEN: ${{ secrets.PAGERDUTY_INTEGRATION_KEY }}
+          EVENT: ${{ fromJSON(github.event.workflow_run) }}
         run: |
           npm install
           node index.js
