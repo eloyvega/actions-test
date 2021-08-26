@@ -3,7 +3,7 @@ const PagerDuty = require("@pagerduty/pdjs");
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
-const event = process.env.EVENT;
+const event = JSON.parse(process.env.EVENT);
 console.log(event.artifacts_url);
 
 const { failed_jobs_allowlist } = require("./failed-jobs-allowlist");
