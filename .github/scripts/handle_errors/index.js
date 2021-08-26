@@ -13,7 +13,7 @@ const getFailedJob = async (repo, owner, runId) => {
       repo,
       run_id: runId,
     });
-    workflowRunDetails = res.data;
+    const workflowRunDetails = res.data;
     for (const job of workflowRunDetails.jobs) {
       if (job.conclusion === "failure") {
         return job.name;
