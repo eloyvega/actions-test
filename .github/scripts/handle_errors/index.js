@@ -26,29 +26,30 @@ const getFailedJob = async (repo, owner, runId) => {
 };
 
 const createPagerDutyIncident = async () => {
-  console.log(event.id);
-  console.log(event.repository.name);
-  console.log(event.html_url);
-  const res = await PagerDuty.event({
-    data: {
-      routing_key: process.env.PD_TOKEN,
-      event_action: "trigger",
-      dedup_key: `${event.id}`,
-      payload: {
-        summary: "Failure in orange dot workflow",
-        source: "GitHub Actions workflow",
-        severity: "error",
-        component: event.repository.name,
-      },
-      links: [
-        {
-          href: event.html_url,
-          text: "Workflow run URL",
+  try {
+    await PagerDuty.event({
+      data: {
+        routing_key: process.env.PD_TOKEN,
+        event_action: "trigger",
+        dedup_key: `${event.id}`,
+        payload: {
+          summary: "Failure in orange dot workflow",
+          source: "GitHub Actions workflow",
+          severity: "error",
+          component: event.repository.name,
         },
-      ],
-    },
-  });
-  console.log(res);
+        links: [
+          {
+            href: event.html_url,
+            text: "Workflow run URL",
+          },
+        ],
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    throw "Fail at creating PagerDuty incident";
+  }
 };
 
 const main = async ({ repo, owner, runId }) => {
