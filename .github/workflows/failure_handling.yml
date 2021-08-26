@@ -20,7 +20,7 @@ jobs:
           OWNER: ${{ github.event.workflow_run.repository.owner.login }}
           RUN_ID: ${{ github.event.workflow_run.id }}
           PD_TOKEN: ${{ secrets.PAGERDUTY_INTEGRATION_KEY }}
-          EVENT: ${{ fromJSON(github.event.workflow_run) }}
+          EVENT: ${{ toJSON(github.event.workflow_run) }}
         run: |
           npm install
           node index.js
