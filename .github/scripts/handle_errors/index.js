@@ -4,8 +4,6 @@ const PagerDuty = require("@pagerduty/pdjs");
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
 const event = JSON.parse(process.env.EVENT);
-console.log(event.artifacts_url);
-
 const { failed_jobs_allowlist } = require("./failed-jobs-allowlist");
 
 const getFailedJob = async (repo, owner, runId) => {
@@ -30,14 +28,16 @@ const getFailedJob = async (repo, owner, runId) => {
 const createPagerDutyIncident = async () => {
   const res = await PagerDuty.event({
     data: {
-      routing_key: "",
+      routing_key: process.env.PD_TOKEN,
       event_action: "trigger",
-      dedup_key: "test_incident_2_88f520",
+      dedup_key: event.id,
       payload: {
-        summary: "Test Event V2",
-        source: "test-source",
+        summary: "Failure in orange dot workflow",
+        source: "GitHub Actions workflow",
         severity: "error",
+        component: event.repository.name,
       },
+      links: [event.html_url],
     },
   });
   console.log(res);
@@ -45,17 +45,13 @@ const createPagerDutyIncident = async () => {
 
 const main = async ({ repo, owner, runId }) => {
   const failedJob = await getFailedJob(repo, owner, runId);
-  if (failed_jobs_allowlist.includes(failedJob)) {
-    console.log("Nothing to do");
-    return;
+  if (!failed_jobs_allowlist.includes(failedJob)) {
+    await createPagerDutyIncident();
   }
-  console.log("Notify");
-  // await createPagerDutyIncident();
-  console.log(failed_jobs_allowlist);
 };
 
 main({
-  repo: process.env.REPO,
-  owner: process.env.OWNER,
-  runId: process.env.RUN_ID,
+  repo: event.repository.name,
+  owner: event.repository.owner.login,
+  runId: event.id,
 });

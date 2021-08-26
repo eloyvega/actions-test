@@ -16,9 +16,6 @@ jobs:
         working-directory: .github/scripts/handle_errors
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.event.workflow_run.repository.name }}
-          OWNER: ${{ github.event.workflow_run.repository.owner.login }}
-          RUN_ID: ${{ github.event.workflow_run.id }}
           PD_TOKEN: ${{ secrets.PAGERDUTY_INTEGRATION_KEY }}
           EVENT: ${{ toJSON(github.event.workflow_run) }}
         run: |
