@@ -19,6 +19,8 @@ jobs:
 
       - name: Extract
         run: |
-          substring=${'${{ steps.pr-info.outputs.body }}'#*Automation test config}
+          body=$(echo "${{ steps.pr-info.outputs.body }}" | tr -d '\n')
+          substring=${body#*Automation test config}
+          echo $substring
       #     buildConfig="{"$(echo $substring | cut -d "{" -f2 | cut -d "}" -f1)"}"
       #     echo $buildConfig
