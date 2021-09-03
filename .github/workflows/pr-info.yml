@@ -33,4 +33,9 @@ jobs:
           --url https://api.github.com/repos/${{ github.repository }}/pulls/2 \
           --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
           --header 'content-type: application/json')
-          echo "$PR_INFORMATION"
+          PR_DESCRIPTION=$(echo $PR_INFORMATION | jq -r '.body')
+          echo $PR_DESCRIPTION
+          substring=${PR_DESCRIPTION#*Automation test config}
+          echo $substring
+          buildConfig="{"$(echo $substring | cut -d "{" -f2 | cut -d "}" -f1)"}"
+          echo $buildConfig
