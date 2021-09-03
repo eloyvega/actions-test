@@ -20,7 +20,7 @@ jobs:
       - name: Using event
         run: |
           echo "Getting from event"
-          PR_DESCRIPTION=echo '${{ github.event.pull_request.body }}'
+          PR_DESCRIPTION=$(echo '${{ github.event.pull_request.body }}')
           substring=${PR_DESCRIPTION#*Automation test config}
           buildConfig="{"$(echo $substring | cut -d "{" -f2 | cut -d "}" -f1)"}"
           appBranch=$(echo $buildConfig | jq -r '.appBranch')
