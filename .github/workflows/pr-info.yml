@@ -1,0 +1,46 @@
+name: pr-info
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get configs
+        id: get-configs
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: |
+          echo "Getting from event"
+          PR_DESCRIPTION=$(echo "$GITHUB_CONTEXT" | jq -r '.event.pull_request.body')
+          substring=${PR_DESCRIPTION#*Automation test config}
+          buildConfig="{"$(echo $substring | cut -d "{" -f2 | cut -d "}" -f1)"}"
+
+          wild_branch=$(echo $buildConfig | jq -r '.wildBranch')
+          wild_branch=${wild_branch:=master}
+          wp_branch=$(echo $buildConfig | jq -r '.wpBranch')
+          echo "::set-output name=wild_branch::$wild_branch"
+          echo "::set-output name=wp_branch::$wp_branch"
+
+      - name: Checkout wildrydes
+        uses: actions/checkout@v2
+        with:
+          repository: eloyvega/wildrydes-serverless
+          ref: ${{ steps.get-configs.outputs.wild_branch }}
+          token: ${{ secrets.PAT }}
+          path: wildrydes-serverless
+
+      - name: Checkout wordpress
+        if: ${{ steps.get-configs.outputs.wp_branch != '' }}
+        uses: actions/checkout@v2
+        with:
+          repository: eloyvega/wordpress-docker
+          ref: ${{ steps.get-configs.outputs.wp_branch }}
+          token: ${{ secrets.PAT }}
+          path: wordpress-docker
