@@ -3,7 +3,7 @@ name: Failure
 on:
   push:
     branches:
-      - main
+      - failure
 
 jobs:
   all-ok:
