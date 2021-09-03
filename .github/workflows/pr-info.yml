@@ -15,4 +15,4 @@ jobs:
 
       - name: Print
         run: |
-          echo ${{ steps.pr-info.outputs.body }}
+          echo "${{ steps.pr-info.outputs.body }}"
