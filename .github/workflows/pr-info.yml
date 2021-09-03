@@ -23,6 +23,7 @@ jobs:
           buildConfig="{"$(echo $substring | cut -d "{" -f2 | cut -d "}" -f1)"}"
 
           wild_branch=$(echo $buildConfig | jq -r '.wildBranch')
+          wild_branch=${wild_branch:=master}
           wp_branch=$(echo $buildConfig | jq -r '.wpBranch')
           echo "::set-output name=wild_branch::$wild_branch"
           echo "::set-output name=wp_branch::$wp_branch"
