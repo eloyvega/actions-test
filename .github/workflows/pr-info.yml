@@ -32,20 +32,5 @@ jobs:
         with:
           repository: eloyvega/wildrydes-serverless
           ref: ${{ steps.get-configs.outputs.wild_branch }}
-          ssh-key: ${{ secrets.PAT }}
+          token: ${{ secrets.PAT }}
           path: wildrydes-serverless
-
-      - name: Get build config info
-        id: build-config
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: |
-          echo "Getting branches info from PR body"
-          PR_DESCRIPTION=$(echo "$GITHUB_CONTEXT" | jq -r '.event.pull_request.body')
-          substring=${PR_DESCRIPTION#*Automation test config}
-          buildConfig="{"$(echo $substring | cut -d "{" -f2 | cut -d "}" -f1)"}"
-          dtc_app_branch=${$(echo $buildConfig | jq -r '.dtcAppBranch'):=develop}
-          echo "::set-output name=dtc_app_branch::$dtc_app_branch"
-          echo "::set-output name=luna_branch::$(echo $buildConfig | jq -r '.lunaBranch')"
-          echo "::set-output name=sonic_branch::$(echo $buildConfig | jq -r '.sonicBranch')"
-          echo "::set-output name=player_cast_branch::$(echo $buildConfig | jq -r '.playerCastBranch')"
