@@ -32,5 +32,5 @@ jobs:
         with:
           repository: eloyvega/wildrydes-serverless
           ref: ${{ steps.get-configs.outputs.wild_branch }}
-          ssh-key: ${{ secrets.PRIVATE_ACTIONS_KEY }
+          ssh-key: ${{ secrets.PAT }}
           path: wildrydes-serverless
