@@ -9,22 +9,18 @@ jobs:
   info:
     runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJSON(job) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Using API
+      # - name: Dump GitHub context
+      #   env:
+      #     GITHUB_CONTEXT: ${{ toJSON(github) }}
+      #   run: echo "$GITHUB_CONTEXT"
+      # - name: Dump job context
+      #   env:
+      #     JOB_CONTEXT: ${{ toJSON(job) }}
+      #   run: echo "$JOB_CONTEXT"
+      - name: Using event
         run: |
-          echo "Getting from API"
-          PR_INFORMATION=$(curl --request GET \
-          --url https://api.github.com/repos/${{ github.repository }}/pulls/2 \
-          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-          --header 'content-type: application/json')
-          PR_DESCRIPTION=$(echo $PR_INFORMATION | jq -r '.body')
+          echo "Getting from event"
+          PR_DESCRIPTION=echo '${{ github.event.pull_request.body }}'
           substring=${PR_DESCRIPTION#*Automation test config}
           buildConfig="{"$(echo $substring | cut -d "{" -f2 | cut -d "}" -f1)"}"
           appBranch=$(echo $buildConfig | jq -r '.appBranch')
