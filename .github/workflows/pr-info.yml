@@ -20,9 +20,8 @@ jobs:
       - name: Extract
         run: |
           echo "Running extract step"
-          body=$(echo "${{ steps.pr-info.outputs.body }}" | tr -d '\n')
+          body=$(echo '${{ steps.pr-info.outputs.body }}' | tr -d '\n')
+          echo '$body'
           substring=${body#*Automation test config}
           buildConfig="{"$(echo $substring | cut -d "{" -f2 | cut -d "}" -f1)"}"
           echo $buildConfig
-          appBranch=$(echo $buildConfig | jq -r '.appBranch')
-          echo $appBranch
