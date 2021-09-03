@@ -9,23 +9,14 @@ jobs:
   info:
     runs-on: ubuntu-latest
     steps:
-      - name: action
-        id: pr-info
-        uses: Brymastr/pr-info-action@v1
-
-      - name: Print
-        run: |
-          echo "${{ steps.pr-info.outputs.body }}"
-
-      - name: Extract
-        run: |
-          echo "Running extract step"
-          body=$(echo "${{ steps.pr-info.outputs.body }}" | tr -d '\n')
-          echo $body
-          substring=${body#*Automation test config}
-          buildConfig="{"$(echo $substring | cut -d "{" -f2 | cut -d "}" -f1)"}"
-          echo $buildConfig
-
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJSON(job) }}
+        run: echo "$JOB_CONTEXT"
       - name: Using API
         run: |
           echo "Getting from API"
