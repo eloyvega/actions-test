@@ -25,7 +25,7 @@ jobs:
           --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
           --header 'content-type: application/json')
           PR_DESCRIPTION=$(echo $PR_INFORMATION | jq -r '.body')
-          substring=${${{ github.event.pull_request.body }}#*Automation test config}
+          substring=${PR_DESCRIPTION#*Automation test config}
           buildConfig="{"$(echo $substring | cut -d "{" -f2 | cut -d "}" -f1)"}"
           appBranch=$(echo $buildConfig | jq -r '.appBranch')
           echo $appBranch
