@@ -36,7 +36,7 @@ jobs:
           path: wildrydes-serverless
 
       - name: Checkout wordpress
-        if: ${{ steps.get-configs.outputs.wp_branch != "" }}
+        if: ${{ steps.get-configs.outputs.wp_branch != '' }}
         uses: actions/checkout@v2
         with:
           repository: eloyvega/wordpress-docker
