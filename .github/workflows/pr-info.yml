@@ -39,3 +39,5 @@ jobs:
           echo $substring
           buildConfig="{"$(echo $substring | cut -d "{" -f2 | cut -d "}" -f1)"}"
           echo $buildConfig
+          appBranch=$(echo $buildConfig | jq -r '.appBranch')
+          echo $appBranch
