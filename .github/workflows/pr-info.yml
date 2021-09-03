@@ -27,10 +27,19 @@ jobs:
           echo "::set-output name=wild_branch::$wild_branch"
           echo "::set-output name=wp_branch::$wp_branch"
 
-      - name: Checkout
+      - name: Checkout wildrydes
         uses: actions/checkout@v2
         with:
           repository: eloyvega/wildrydes-serverless
           ref: ${{ steps.get-configs.outputs.wild_branch }}
           token: ${{ secrets.PAT }}
           path: wildrydes-serverless
+
+      - name: Checkout wordpress
+        if: ${{ steps.get-configs.outputs.wp_branch != "" }}
+        uses: actions/checkout@v2
+        with:
+          repository: eloyvega/wordpress-docker
+          ref: ${{ steps.get-configs.outputs.wp_branch }}
+          token: ${{ secrets.PAT }}
+          path: wordpress-docker
