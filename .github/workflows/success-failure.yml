@@ -23,11 +23,19 @@ jobs:
       - ok
       - not-ok
     steps:
-      - name: Dump ok context
-        env:
-          JOB_CONTEXT: ${{ toJSON(needs.ok) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Dump not-ok context
-        env:
-          STEPS_CONTEXT: ${{ toJSON(needs.not-ok) }}
-        run: echo "$STEPS_CONTEXT"
+      - name: Validation
+        id: validation
+        run: |
+          if [${{needs.ok.result}} = "failure"]
+          then
+            echo "::set-output name=result::build_failure"
+          elif [${{needs.not-ok.result}} = "failure"]
+          then
+            echo "::set-output name=result::test_failure"
+          else
+            echo "::set-output name=result::success"
+          fi
+
+      - name: Print
+        run: echo ${{steps.validation.outputs.result}}
+
