@@ -34,9 +34,15 @@ jobs:
             echo "::set-output name=result::success"
           fi
 
+      - name: Get commit SHA
+        id: sha
+        run: |
+          echo "::set-output name=sha::$(git rev-parse HEAD)"
+
       - name: Print
         run: |
           echo ${{steps.validation.outputs.result}}
+          echo ${{steps.sha.outputs.sha}}
           echo ${{ github.repository }}
           echo ${{ github.sha }}
           echo ${{ github.run_id }}
