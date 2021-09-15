@@ -24,4 +24,5 @@ jobs:
       - not-ok
     steps:
       - run: |
-          echo '{{needs.ok}}'
+          echo ${{needs.ok}}
+          echo ${{needs.not-ok}}
