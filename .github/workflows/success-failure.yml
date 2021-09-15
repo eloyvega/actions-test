@@ -35,5 +35,8 @@ jobs:
           fi
 
       - name: Print
-        run: echo ${{steps.validation.outputs.result}}
-
+        run: |
+          echo ${{steps.validation.outputs.result}}
+          echo ${{ github.repository }}
+          echo ${{ github.sha }}
+          echo ${{ github.run_id }}
