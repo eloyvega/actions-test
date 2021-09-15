@@ -23,6 +23,14 @@ jobs:
       - ok
       - not-ok
     steps:
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJSON(job) }}
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJSON(steps) }}
+        run: echo "$STEPS_CONTEXT"
       - run: |
           echo ${{needs.ok}}
           echo ${{needs.not-ok}}
