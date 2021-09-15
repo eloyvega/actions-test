@@ -23,6 +23,8 @@ jobs:
       - ok
       - not-ok
     steps:
+      - uses: actions/checkout@v2
+
       - name: Validation
         id: validation
         run: |
