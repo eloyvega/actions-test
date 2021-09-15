@@ -26,10 +26,10 @@ jobs:
       - name: Validation
         id: validation
         run: |
-          if [${{needs.ok.result}} = "failure"]
+          if ['${{needs.ok.result}}' = "failure"]
           then
             echo "::set-output name=result::build_failure"
-          elif [${{needs.not-ok.result}} = "failure"]
+          elif ['${{needs.not-ok.result}}' = "failure"]
           then
             echo "::set-output name=result::test_failure"
           else
