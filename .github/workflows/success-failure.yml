@@ -1,0 +1,27 @@
+name: Result Success or Failure
+
+on:
+  push:
+    branches:
+      - test-result-success-failure
+
+jobs:
+  ok:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "hola"
+  not-ok:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          asdfasdf
+  finally:
+    runs-on: ubuntu-latest
+    if: always()
+    needs:
+      - ok
+      - not-ok
+    steps:
+      - run: |
+          echo '{{needs.ok}}'
