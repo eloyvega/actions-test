@@ -1,0 +1,13 @@
+name: Dispatch
+
+on:
+  repository_dispatch:
+    types: [on-demand-test]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          MESSAGE: ${{ github.event.client_payload.message }}
+        run: echo $MESSAGE
